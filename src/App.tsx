@@ -83,14 +83,14 @@ function App() {
       <section className={`hero-stage ${drawState === "revealed" ? "has-reading" : ""}`} aria-label="Designer Tarot prototype">
         <aside className="ritual-panel" aria-label="選擇抽牌情境">
           <div className="panel-heading">
-            <h2>今天要面對什麼狀況？</h2>
+            <h2>今天要面對什麼？</h2>
           </div>
 
           <div className="scenario-list">
             {scenarios.map((scenario) => (
               <button
                 key={scenario.id}
-                className={`scenario-button ${selectedScenario === scenario.id ? "is-active" : ""}`}
+                className={`scenario-button ${scenario.id === "daily" ? "is-daily" : ""} ${selectedScenario === scenario.id ? "is-active" : ""}`}
                 type="button"
                 onClick={() => handleScenarioChange(scenario.id)}
               >
