@@ -20,7 +20,7 @@ const sharedPromptBase = [
 export const cardImagePrompts: CardImagePrompt[] = [
   {
     cardId: "major-00",
-    displayName: "開稿者",
+    displayName: "打開檔案",
     sourceName: "The Fool",
     fileName: "major-00-opening-oracle.webp",
     prompt: `${sharedPromptBase}
@@ -79,4 +79,3 @@ Symbolic details: paper tape, clipped scraps, faint sun/moon symbol, cyan and du
 Avoid: Pinterest UI, readable magazine text, brand logos, too many saturated colors.`,
   },
 ];
-

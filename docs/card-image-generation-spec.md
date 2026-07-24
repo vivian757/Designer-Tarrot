@@ -10,7 +10,7 @@
 
 | Card ID | Card Name | Why This Card |
 |---|---|---|
-| `major-00` | 開稿者 / The Fool | 測「開始、新案、空白 frame」的第一印象。 |
+| `major-00` | 打開檔案 / The Fool | 測「開始、新案、空白 frame」的第一印象。 |
 | `major-16` | 重構之塔 / The Tower | 測「崩塌、重構、客戶打槍」的戲劇性。 |
 | `major-17` | 初衷之星 / The Star | 測「願景、希望、找回設計熱情」的溫柔感。 |
 | `designer-01` | 回饋迴圈 / The Feedback Loop | 測設計師專屬語境，必須有梗但不能太迷因。 |
@@ -96,7 +96,7 @@ Constraints: no readable logos, no watermark, no photorealistic people, no fanta
 
 ## Prompts
 
-### major-00 開稿者 / The Fool
+### major-00 打開檔案 / The Fool
 
 Primary request: A designer oracle card illustration about starting a new project before the brief is clear.
 Subject: an empty design frame floating like a portal, a pencil cursor stepping off the edge, loose paper scraps, tiny rough thumbnails, a small glowing dot suggesting first inspiration.
@@ -145,4 +145,3 @@ After images exist in `public/cards/`:
 3. In `TarotFace`, render the image as a card artwork layer when `imageAsset` exists.
 4. Keep the current SVG symbol as fallback for all cards without image assets.
 5. Add a subtle overlay so app typography remains readable.
-

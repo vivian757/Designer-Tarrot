@@ -1,14 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
-import { cards, scenarios, type DesignerTarotCard, type ScenarioId, type VisualSymbol } from "./data/cards";
+import { cards, scenarios, type CardReading, type DesignerTarotCard, type ScenarioId, type VisualSymbol } from "./data/cards";
 
 type DrawState = "idle" | "drawing" | "revealed";
 
 const scenarioCopy: Record<ScenarioId, string> = {
-  daily: "今日設計運勢正在開稿",
+  daily: "正在感應今日運勢",
   stuck: "正在定位卡住的那一層",
   "bad-brief": "正在替奇妙需求接收宇宙翻譯",
-  pitch: "正在校準提案場的信念值",
+  pitch: "正在校準提案現場的信心",
   feedback: "正在讀取 feedback 的本體",
   redo: "正在判斷這版該救還是放生",
   tired: "正在替審美疲勞留一盞燈",
@@ -19,12 +19,24 @@ function pickCard(previousCardId?: string) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
+function getCardReading(card: DesignerTarotCard, scenario: ScenarioId): CardReading {
+  return (
+    card.readings?.[scenario] ?? {
+      currentState: card.coreMeaning ?? card.currentState,
+      designReminder: card.designReminder,
+      nextAction: card.nextAction,
+      oracleLine: card.oracleLine,
+    }
+  );
+}
+
 function App() {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioId>("daily");
   const [drawState, setDrawState] = useState<DrawState>("idle");
   const [activeCard, setActiveCard] = useState<DesignerTarotCard | null>(null);
   const [selectedDeckIndex, setSelectedDeckIndex] = useState(3);
   const selectedScenarioMeta = scenarios.find((scenario) => scenario.id === selectedScenario) ?? scenarios[0];
+  const activeReading = activeCard ? getCardReading(activeCard, selectedScenario) : null;
   const constellation = useMemo(
     () =>
       Array.from({ length: 18 }, (_, index) => ({
@@ -199,11 +211,11 @@ function App() {
                 <p className="source-name">{activeCard.sourceName}</p>
                 <p className="context-line">{activeCard.designContext}</p>
 
-                <ResultBlock title="你現在的狀態" text={activeCard.currentState} />
-                <ResultBlock title="設計提醒" text={activeCard.designReminder} />
-                <ResultBlock title="下一步行動" text={activeCard.nextAction} />
+                <ResultBlock title="你現在的狀態" text={activeReading?.currentState ?? ""} />
+                <ResultBlock title="設計提醒" text={activeReading?.designReminder ?? ""} />
+                <ResultBlock title="下一步行動" text={activeReading?.nextAction ?? ""} />
 
-                <blockquote>{activeCard.oracleLine}</blockquote>
+                <blockquote>{activeReading?.oracleLine}</blockquote>
               </motion.div>
             </motion.aside>
           ) : null}
