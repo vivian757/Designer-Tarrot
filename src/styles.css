@@ -382,8 +382,8 @@ button {
   height: 8px;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: var(--signal);
-  box-shadow: 0 0 16px rgba(231, 255, 79, 0.46);
+  background: var(--paper);
+  box-shadow: 0 0 16px rgba(244, 240, 232, 0.34);
   animation: spell-pulse 1.35s ease-in-out infinite;
 }
 
@@ -775,11 +775,10 @@ button {
 
 .pattern-notes {
   background:
-    radial-gradient(circle at 22% 28%, rgba(255, 111, 174, 0.18), transparent 20%),
     linear-gradient(90deg, rgba(255, 90, 95, 0.15) 1px, transparent 1px),
     linear-gradient(rgba(244, 240, 232, 0.055) 1px, transparent 1px),
     #141414;
-  background-size: 34px 34px, 18px 18px, auto;
+  background-size: 18px 18px, 18px 18px, auto;
 }
 
 .pattern-quiet {
