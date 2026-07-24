@@ -575,23 +575,14 @@ button {
   background-size: 9px 9px;
 }
 
-.mini-card-code {
-  position: absolute;
-  top: 17px;
-  z-index: 2;
-  color: #e7ff4f;
-  font-size: 7px;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  white-space: nowrap;
-}
-
 .mini-card-symbol {
   position: relative;
   z-index: 2;
-  width: 72%;
+  width: 58%;
   color: var(--paper);
-  filter: drop-shadow(0 0 16px rgba(231, 255, 79, 0.28));
+  filter:
+    drop-shadow(0 0 12px rgba(244, 240, 232, 0.16))
+    drop-shadow(0 0 10px rgba(231, 255, 79, 0.12));
 }
 
 .revealed-card-shell {

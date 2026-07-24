@@ -214,7 +214,7 @@ type DesignerTarotCard = {
 
 | ID | 牌組 | 原型 | 設計師牌名 | 設計語境 | 你現在的狀態 | 設計提醒 | 下一步行動 | 一句牌語 | Tags |
 |---|---|---|---|---|---|---|---|---|---|
-| designer-01 | designer | Original | 回饋迴圈 | 不斷被改、卡審核、意見來回 | 這一輪可能不是最後一輪，熟悉的那句「字放大一點」又回來了。 | 這不一定是做不好，可能只是對方還沒找到一句讓自己放心的話。 | 把 feedback 改寫成：對方到底怕什麼沒有被解決？ | 字放大一點，通常不是最後一次。 | feedback, revision, stakeholder |
+| designer-01 | designer | Original | Final.Final.Final | 不斷被改、卡審核、意見來回 | 這一輪可能不是最後一輪，熟悉的那句「字放大一點」又回來了。 | 這不一定是做不好，可能只是對方還沒找到一句讓自己放心的話。 | 把 feedback 改寫成：對方到底怕什麼沒有被解決？ | 字放大一點，通常不是最後一次。 | feedback, revision, stakeholder |
 | designer-02 | designer | Original | 靈感牆 | 收集參考、風格未定、方向發散 | 你開了很多視窗，每個都很美，但沒有一個真的成為方向。 | 參考很多不等於方向很多，先找出你真正想靠近的感覺。 | 從參考中挑三個共同特徵，寫成三個形容詞。 | 靈感很多沒關係，先不要讓它們一起主持會議。 | moodboard, inspiration, style |
 | designer-03 | designer | Original | 死線 | 時間壓力、趕稿、設計過勞 | 時間開始收縮，你的腦袋也跟著變得很吵。 | 死線會壓縮選擇，也會逼出真正重要的東西。 | 切出 must-have、should-have、nice-to-have，先保住 must-have。 | 時間不會自己變多，先救最重要的那一塊。 | deadline, pressure, prioritization |
 | designer-04 | designer | Original | 用戶幽靈 | 忘記使用者、自嗨設計、會議室視角 | 大家都在替使用者說話，但真正會按那顆按鈕的人不在這裡。 | 你設計的是給人用的，不是給會議室裡的人互相欣賞的。 | 寫下使用者最想完成的一件事，刪掉擋在前面的東西。 | 那個點按鈕的人不在現場，但他一直都在。 | ux, user, empathy |

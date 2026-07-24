@@ -56,7 +56,7 @@ Avoid: generic night landscape, angelic figure, overly sentimental fantasy style
   },
   {
     cardId: "designer-01",
-    displayName: "回饋迴圈",
+    displayName: "Final.Final.Final",
     sourceName: "The Feedback Loop",
     fileName: "designer-01-feedback-loop.webp",
     prompt: `${sharedPromptBase}

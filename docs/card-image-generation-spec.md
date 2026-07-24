@@ -13,7 +13,7 @@
 | `major-00` | 打開檔案 / The Fool | 測「開始、新案、空白 frame」的第一印象。 |
 | `major-16` | 重構之塔 / The Tower | 測「崩塌、重構、客戶打槍」的戲劇性。 |
 | `major-17` | 初衷之星 / The Star | 測「願景、希望、找回設計熱情」的溫柔感。 |
-| `designer-01` | 回饋迴圈 / The Feedback Loop | 測設計師專屬語境，必須有梗但不能太迷因。 |
+| `designer-01` | Final.Final.Final / The Feedback Loop | 測設計師專屬語境，必須有梗但不能太迷因。 |
 | `designer-02` | 靈感牆 / The Moodboard | 測拼貼與參考素材的核心風格。 |
 
 ## Visual Direction
@@ -120,7 +120,7 @@ Mood: hopeful, quiet, restorative, clear after noise.
 Symbolic details: star map, user path line, soft cyan highlight, washed paper sky, gentle pencil shading.
 Avoid: generic night landscape, angelic figure, overly sentimental fantasy style.
 
-### designer-01 回饋迴圈 / The Feedback Loop
+### designer-01 Final.Final.Final / The Feedback Loop
 
 Primary request: A designer original oracle card illustration about endless revision cycles and unclear feedback.
 Subject: speech bubbles and redline comments circling around a design frame, loop arrows drawn by pencil, one question mark breaking the loop.

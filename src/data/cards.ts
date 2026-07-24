@@ -1354,7 +1354,7 @@ export const cards: DesignerTarotCard[] = [
     id: "designer-01",
     arcana: "designer",
     sourceName: "Original",
-    displayName: "回饋迴圈",
+    displayName: "Final.Final.Final",
     coreMeaning: "一直改不一定是你做不好，可能是大家還沒講出真正擔心什麼。",
     designContext: "不斷被改、卡審核、意見來回",
     currentState: "你不是沒做事，只是被困在「再調一下」的結界裡。",

@@ -353,13 +353,19 @@ function DeckSpread({
 function MiniCardBack() {
   return (
     <div className="mini-card-back">
-      <div className="mini-card-code">DESIGNER TAROT</div>
       <svg viewBox="0 0 120 160" className="mini-card-symbol">
-        <rect x="20" y="22" width="80" height="112" rx="3" fill="none" stroke="currentColor" strokeWidth="2" />
-        <path d="M28 80C40 60 54 52 70 54C84 56 94 66 100 80C92 96 78 104 60 103C44 102 34 94 28 80Z" fill="none" stroke="currentColor" strokeWidth="2.2" />
-        <circle cx="64" cy="80" r="12" fill="#E7FF4F" />
-        <circle cx="64" cy="80" r="4.5" fill="#101010" />
-        <path d="M78 100L94 126L82 121L75 138Z" fill="#E7FF4F" stroke="currentColor" strokeWidth="1.4" />
+        <path
+          d="M20 80C31 61 46 51 64 51C82 51 98 62 108 80C98 98 82 109 64 109C46 109 31 98 20 80Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M30 80C40 67 51 62 64 62C77 62 89 68 98 80" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.46" />
+        <circle cx="64" cy="80" r="13" fill="#E7FF4F" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="64" cy="80" r="5" fill="#101010" />
+        <circle cx="68" cy="76" r="1.5" fill="#F4F0E8" opacity="0.9" />
       </svg>
     </div>
   );
