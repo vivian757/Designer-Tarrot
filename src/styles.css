@@ -48,56 +48,41 @@ button {
   background:
     linear-gradient(90deg, rgba(244, 240, 232, 0.035) 1px, transparent 1px),
     linear-gradient(rgba(244, 240, 232, 0.035) 1px, transparent 1px),
-    radial-gradient(circle at 20% 12%, rgba(244, 240, 232, 0.08), transparent 26%),
-    radial-gradient(circle at 78% 76%, rgba(89, 216, 255, 0.12), transparent 28%),
     #0e0e10;
-  background-size: 38px 38px, 38px 38px, auto, auto, auto;
-}
-
-.ambient-grid {
-  position: absolute;
-  inset: 76px 28px 28px;
-  z-index: -3;
-  border: 1px solid rgba(244, 240, 232, 0.08);
-  background-image:
-    linear-gradient(90deg, rgba(244, 240, 232, 0.06) 1px, transparent 1px),
-    linear-gradient(rgba(244, 240, 232, 0.06) 1px, transparent 1px);
-  background-size: 96px 96px;
-  opacity: 0.55;
-  mask-image: radial-gradient(circle at center, black, transparent 80%);
-}
-
-.ambient-orbit {
-  position: absolute;
-  z-index: -2;
-  border: 1px solid rgba(244, 240, 232, 0.12);
-  border-radius: 999px;
-  transform: rotate(-16deg);
-}
-
-.orbit-one {
-  width: 52vw;
-  height: 18vw;
-  left: 21%;
-  top: 29%;
-}
-
-.orbit-two {
-  width: 38vw;
-  height: 14vw;
-  right: -7%;
-  bottom: 12%;
-  transform: rotate(22deg);
+  background-size: 38px 38px;
 }
 
 .constellation-dot {
   position: absolute;
   z-index: -1;
-  width: 4px;
-  height: 4px;
+  width: var(--star-size, 3px);
+  height: var(--star-size, 3px);
   border-radius: 50%;
-  background: rgba(244, 240, 232, 0.7);
+  background: rgba(244, 240, 232, 0.84);
+  box-shadow: 0 0 10px rgba(244, 240, 232, 0.28);
   animation: flicker 4.8s ease-in-out infinite;
+  animation-delay: var(--flicker-delay, 0s);
+}
+
+.app-shell.is-drawing .constellation-dot {
+  animation:
+    flicker 4.8s ease-in-out infinite,
+    constellation-gather 920ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: var(--flicker-delay, 0s), 0s;
+  background: rgba(244, 240, 232, 1);
+  box-shadow:
+    0 0 10px rgba(244, 240, 232, 0.58),
+    0 0 18px rgba(89, 216, 255, 0.24);
+}
+
+@keyframes constellation-gather {
+  0% {
+    translate: 0 0;
+  }
+  82%,
+  100% {
+    translate: var(--focus-x) var(--focus-y);
+  }
 }
 
 @keyframes flicker {
@@ -352,15 +337,6 @@ button {
   letter-spacing: 0.08em;
 }
 
-.scenario-spell::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(100deg, transparent 0%, rgba(244, 240, 232, 0.38) 44%, transparent 58%);
-  transform: translateX(-120%);
-  animation: spell-scan 2.6s ease-in-out infinite;
-}
-
 .scenario-spell::after {
   content: "";
   position: absolute;
@@ -384,54 +360,10 @@ button {
   border-radius: 50%;
   background: var(--paper);
   box-shadow: 0 0 16px rgba(244, 240, 232, 0.34);
-  animation: spell-pulse 1.35s ease-in-out infinite;
-}
-
-.spell-pulse::after {
-  content: "";
-  position: absolute;
-  inset: -8px;
-  border: 1px solid rgba(231, 255, 79, 0.22);
-  border-radius: 50%;
-  animation: spell-ring 1.35s ease-out infinite;
-}
-
-@keyframes spell-scan {
-  0%,
-  34% {
-    transform: translateX(-125%);
-  }
-  72%,
-  100% {
-    transform: translateX(125%);
-  }
-}
-
-@keyframes spell-pulse {
-  0%,
-  100% {
-    transform: scale(0.86);
-    opacity: 0.72;
-  }
-  50% {
-    transform: scale(1.15);
-    opacity: 1;
-  }
-}
-
-@keyframes spell-ring {
-  0% {
-    transform: scale(0.45);
-    opacity: 0.72;
-  }
-  100% {
-    transform: scale(1.45);
-    opacity: 0;
-  }
 }
 
 .draw-card-button {
-  width: min(68vw, 470px);
+  width: min(100%, 560px);
   min-width: 330px;
   aspect-ratio: 1.02;
   padding: 0;
@@ -458,11 +390,38 @@ button {
   width: 100%;
   height: 100%;
   place-items: center;
+  isolation: isolate;
   transform-style: preserve-3d;
+}
+
+.draw-focus {
+  position: absolute;
+  z-index: 1;
+  width: 68%;
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.draw-focus span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--focus-size);
+  height: var(--focus-size);
+  border-radius: 50%;
+  background: var(--focus-color);
+  opacity: 0;
+  box-shadow: 0 0 12px var(--focus-color);
+  transform: translate(-50%, -50%) rotate(var(--focus-angle)) translateY(calc(var(--focus-distance) * -1));
+}
+
+.deck-spread.drawing .draw-focus span {
+  animation: focus-star-pull 820ms cubic-bezier(0.18, 0.82, 0.16, 1) var(--focus-delay) both;
 }
 
 .deck-aura {
   position: absolute;
+  z-index: 0;
   width: 66%;
   aspect-ratio: 1;
   border: 1px solid rgba(244, 240, 232, 0.16);
@@ -477,8 +436,9 @@ button {
 
 .deck-card {
   position: absolute;
-  width: min(38%, 162px);
-  aspect-ratio: 0.69;
+  z-index: 2;
+  width: min(31%, 170px);
+  aspect-ratio: 360 / 650;
   transform-origin: 50% 82%;
   will-change: transform, opacity;
 }
@@ -534,18 +494,11 @@ button {
 
 .mini-card-back {
   position: relative;
-  display: grid;
   width: 100%;
   height: 100%;
-  place-items: center;
   overflow: hidden;
-  border: 1px solid rgba(244, 240, 232, 0.42);
-  color: var(--paper);
-  background:
-    linear-gradient(90deg, rgba(244, 240, 232, 0.07) 1px, transparent 1px),
-    linear-gradient(rgba(244, 240, 232, 0.07) 1px, transparent 1px),
-    #141414;
-  background-size: 16px 16px;
+  border: 1px solid rgba(244, 240, 232, 0.56);
+  background: #645b55;
   box-shadow:
     0 24px 55px rgba(0, 0, 0, 0.45),
     0 0 0 6px rgba(244, 240, 232, 0.028);
@@ -559,30 +512,11 @@ button {
     0 0 20px rgba(244, 240, 232, 0.1);
 }
 
-.mini-card-back::before {
-  content: "";
-  position: absolute;
-  inset: 9px;
-  border: 1px solid rgba(244, 240, 232, 0.2);
-}
-
-.mini-card-back::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.14;
-  background-image: radial-gradient(rgba(244, 240, 232, 0.72) 0.8px, transparent 0.8px);
-  background-size: 9px 9px;
-}
-
-.mini-card-symbol {
-  position: relative;
-  z-index: 2;
-  width: 58%;
-  color: var(--paper);
-  filter:
-    drop-shadow(0 0 12px rgba(244, 240, 232, 0.16))
-    drop-shadow(0 0 10px rgba(231, 255, 79, 0.12));
+.mini-card-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .revealed-card-shell {
@@ -599,6 +533,24 @@ button {
   50% {
     opacity: 0.8;
     transform: scale(1.04) rotate(5deg);
+  }
+}
+
+@keyframes focus-star-pull {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--focus-angle)) translateY(calc(var(--focus-distance) * -1)) scale(0.45);
+  }
+  16% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) rotate(var(--focus-angle)) translateY(0) scale(0.72);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--focus-angle)) translateY(0) scale(0.2);
   }
 }
 
@@ -1239,7 +1191,7 @@ blockquote {
   }
 
   .deck-card {
-    width: min(35%, 120px);
+    width: min(31%, 102px);
   }
 
   .deck-spread {
@@ -1256,5 +1208,1344 @@ blockquote {
 
   blockquote {
     font-size: 19px;
+  }
+}
+
+/* Card-art direction: sketchbook paper, highlighter marks, and fashion-illustration energy. */
+:root {
+  color: oklch(0.18 0.018 20);
+  background: oklch(0.94 0.022 15);
+  font-family: "Avenir Next", "PingFang TC", "Noto Sans TC", sans-serif;
+  --paper: oklch(0.985 0.012 15);
+  --ink: oklch(0.18 0.018 20);
+  --muted: oklch(0.43 0.025 20);
+  --quiet: oklch(0.18 0.018 20 / 0.12);
+  --line: oklch(0.18 0.018 20 / 0.32);
+  --panel: oklch(0.98 0.014 15 / 0.9);
+  --accent: oklch(0.71 0.21 350);
+  --signal: oklch(0.93 0.21 105);
+}
+
+html,
+body {
+  background: #f9f3f0;
+}
+
+.app-shell {
+  padding: clamp(18px, 3vw, 44px);
+  color: var(--ink);
+  background:
+    linear-gradient(118deg, transparent 0 38%, oklch(0.89 0.045 210 / 0.42) 38% 39.5%, transparent 39.5% 100%),
+    linear-gradient(118deg, transparent 0 65%, oklch(0.89 0.045 210 / 0.3) 65% 66.2%, transparent 66.2% 100%),
+    #f9f3f0;
+  background-size: 100% 100%, 100% 100%, auto;
+}
+
+.app-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.25;
+  background-image: radial-gradient(oklch(0.18 0.018 20 / 0.26) 0.55px, transparent 0.7px);
+  background-size: 11px 11px;
+  mix-blend-mode: multiply;
+}
+
+.art-field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.art-brush,
+.art-disc,
+.art-scratch {
+  position: absolute;
+  display: block;
+}
+
+.art-brush {
+  width: 62vw;
+  height: 20vw;
+  opacity: 0.34;
+  background: repeating-linear-gradient(118deg, transparent 0 8px, oklch(0.82 0.075 215 / 0.74) 9px 12px, transparent 13px 18px);
+  transform: rotate(-13deg) skewX(-8deg);
+}
+
+.art-brush-blue {
+  top: 11%;
+  right: -18%;
+}
+
+.art-brush-blue-secondary {
+  bottom: 1%;
+  left: -27%;
+  opacity: 0.25;
+  transform: rotate(-13deg) skewX(-8deg) scale(0.72);
+}
+
+.art-disc {
+  border-radius: 50%;
+  border: 2px solid oklch(0.18 0.018 20 / 0.76);
+  box-shadow: inset 0 0 0 8px oklch(0.96 0.02 15 / 0.26);
+}
+
+.art-disc-pink {
+  width: clamp(220px, 27vw, 420px);
+  aspect-ratio: 1;
+  top: 26%;
+  right: -10%;
+  background: oklch(0.72 0.21 350 / 0.54);
+  transform: rotate(12deg);
+}
+
+.art-disc-yellow {
+  width: clamp(90px, 12vw, 178px);
+  aspect-ratio: 1;
+  top: 10%;
+  left: 42%;
+  border: 0;
+  background: oklch(0.92 0.21 105 / 0.64);
+  transform: rotate(-9deg);
+}
+
+.art-scratch {
+  height: 2px;
+  background: var(--ink);
+  opacity: 0.28;
+  transform: rotate(-19deg);
+}
+
+.art-scratch-one {
+  top: 19%;
+  left: 4%;
+  width: 22vw;
+  box-shadow: 8px 8px 0 oklch(0.18 0.018 20 / 0.55), 17px 13px 0 oklch(0.18 0.018 20 / 0.34);
+}
+
+.art-scratch-two {
+  right: 7%;
+  bottom: 13%;
+  width: 14vw;
+  box-shadow: 10px 7px 0 oklch(0.18 0.018 20 / 0.48), 22px 14px 0 oklch(0.18 0.018 20 / 0.26);
+}
+
+.art-collage {
+  position: absolute;
+  display: block;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  --collage-rotation: 0deg;
+  --enter-x: 0px;
+  --enter-y: -46px;
+  --collage-delay: 0ms;
+  animation: collage-enter 900ms cubic-bezier(0.16, 0.9, 0.2, 1) var(--collage-delay) both;
+}
+
+.art-collage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(3px 5px 0 oklch(0.18 0.018 20 / 0.16));
+  transform-origin: center;
+  animation: collage-sway 7s ease-in-out calc(900ms + var(--collage-delay)) infinite alternate;
+}
+
+.art-collage-paper {
+  width: clamp(250px, 23vw, 350px);
+  right: -11%;
+  bottom: -14%;
+  opacity: 0.48;
+  --collage-rotation: -8deg;
+  --enter-x: 100px;
+  --enter-y: 74px;
+  --collage-delay: 80ms;
+}
+
+.art-collage-text {
+  width: clamp(160px, 15vw, 235px);
+  left: 52%;
+  top: -4%;
+  --collage-rotation: 9deg;
+  --enter-x: 26px;
+  --enter-y: -90px;
+  --collage-delay: 240ms;
+}
+
+.art-collage-sun {
+  width: clamp(210px, 20vw, 300px);
+  right: -9%;
+  top: 19%;
+  --collage-rotation: 12deg;
+  --enter-x: 112px;
+  --enter-y: -34px;
+  --collage-delay: 160ms;
+}
+
+.art-collage-hands {
+  width: clamp(145px, 14vw, 210px);
+  left: -2%;
+  bottom: calc(-6% + 5px);
+  --collage-rotation: 10deg;
+  --enter-x: -100px;
+  --enter-y: 86px;
+  --collage-delay: 320ms;
+}
+
+.app-shell.is-revealed .art-collage-hands {
+  display: none;
+}
+
+.art-collage-head {
+  width: clamp(145px, 13vw, 195px);
+  right: 4%;
+  top: -3%;
+  opacity: 0.82;
+  --collage-rotation: -7deg;
+  --enter-x: 84px;
+  --enter-y: -88px;
+  --collage-delay: 210ms;
+}
+
+.art-collage-eye {
+  width: clamp(165px, 16vw, 240px);
+  right: -6%;
+  top: 51%;
+  --collage-rotation: -8deg;
+  --enter-x: 96px;
+  --enter-y: 24px;
+  --collage-delay: 280ms;
+}
+
+@keyframes collage-enter {
+  0% {
+    opacity: 0;
+    transform: translate(var(--enter-x), var(--enter-y)) scale(0.86);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes collage-sway {
+  0% {
+    transform: rotate(var(--collage-rotation)) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: rotate(calc(var(--collage-rotation) + 2deg)) translate3d(5px, -7px, 0);
+  }
+}
+
+.topbar {
+  max-width: 1380px;
+  margin-bottom: clamp(24px, 4vw, 50px);
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.eyebrow {
+  display: inline-flex;
+  margin-bottom: 10px;
+  padding: 3px 8px 2px;
+  color: var(--ink);
+  background: var(--signal);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  transform: rotate(-1.5deg);
+}
+
+.topbar h1 {
+  color: var(--ink);
+  font-family: "Bodoni 72", "Times New Roman", "PingFang TC", serif;
+  font-size: clamp(42px, 6vw, 84px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.82;
+}
+
+.status-chip {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  background: var(--paper);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: none;
+  transform: rotate(1.5deg);
+}
+
+.status-chip span {
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  box-shadow: none;
+}
+
+.hero-stage,
+.hero-stage.has-reading {
+  grid-template-columns: minmax(230px, 286px) minmax(380px, 1fr);
+  max-width: 1380px;
+  gap: clamp(24px, 3vw, 50px);
+  align-items: start;
+}
+
+.hero-stage.has-reading {
+  grid-template-columns: minmax(210px, 254px) minmax(350px, 1fr) minmax(280px, 342px);
+  gap: clamp(18px, 2.3vw, 36px);
+}
+
+.ritual-panel,
+.result-panel {
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.ritual-panel {
+  min-height: 0;
+  padding: 0;
+}
+
+.panel-heading {
+  padding: 0 0 15px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.panel-heading h2 {
+  color: var(--ink);
+  font-family: "Bodoni 72", "Times New Roman", "PingFang TC", serif;
+  font-size: clamp(25px, 2.1vw, 33px);
+  font-weight: 700;
+  line-height: 0.96;
+}
+
+.scenario-list {
+  gap: 0;
+  margin-top: 0;
+}
+
+.scenario-button,
+.scenario-button.is-daily {
+  min-height: 0;
+  padding: 16px 6px 16px 0;
+  border: 0;
+  border-bottom: 1px solid oklch(0.18 0.018 20 / 0.35);
+  color: var(--ink);
+  background: transparent;
+  box-shadow: none;
+}
+
+.scenario-button::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  right: 6px;
+  top: 10px;
+  bottom: 10px;
+  z-index: -1;
+  background: transparent;
+  transform: rotate(-0.7deg);
+  transition: background 180ms ease;
+}
+
+.scenario-button.is-daily::before {
+  right: 0;
+  top: 16px;
+  min-height: 17px;
+  padding: 0 5px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: var(--signal);
+  font-size: 9px;
+}
+
+.scenario-button:hover {
+  transform: translateX(5px) rotate(-0.4deg);
+  border-color: var(--ink);
+  background: transparent;
+}
+
+.scenario-button:hover::after {
+  background: oklch(0.88 0.08 210 / 0.28);
+}
+
+.scenario-button.is-active,
+.scenario-button.is-daily.is-active {
+  border-color: var(--ink);
+  background: transparent;
+  box-shadow: none;
+}
+
+.scenario-button.is-active::after {
+  background: oklch(0.92 0.21 105 / 0.7);
+}
+
+.scenario-button.is-daily.is-active::before {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.scenario-button span,
+.scenario-button.is-daily span {
+  max-width: calc(100% - 56px);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.scenario-button small,
+.scenario-button.is-daily small {
+  max-width: calc(100% - 56px);
+  margin-top: 5px;
+  color: oklch(0.37 0.024 20);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.card-stage {
+  min-height: 680px;
+  gap: 26px;
+  padding: 2px 0 14px;
+  perspective: 1500px;
+}
+
+.headline-block {
+  position: relative;
+  z-index: 1;
+}
+
+.headline-block .short-copy {
+  color: var(--ink);
+  font-family: "Bodoni 72", "Times New Roman", "PingFang TC", serif;
+  font-size: clamp(44px, 5.1vw, 74px);
+  font-weight: 700;
+  line-height: 0.9;
+  text-shadow: 3px 3px 0 oklch(0.92 0.21 105 / 0.72);
+}
+
+.scenario-spell {
+  min-height: 30px;
+  margin-top: 14px !important;
+  padding: 0 12px;
+  border: 1.5px solid var(--ink);
+  color: var(--ink) !important;
+  background: var(--paper);
+  box-shadow: 4px 4px 0 oklch(0.18 0.018 20 / 0.18);
+  font-size: 11px !important;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.scenario-spell::after {
+  display: none;
+}
+
+.scenario-spell span:last-child {
+  text-shadow: none;
+}
+
+.spell-pulse {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  box-shadow: none;
+}
+
+.draw-card-button {
+  width: min(100%, 580px);
+  aspect-ratio: 0.94;
+  color: var(--ink);
+}
+
+.draw-card-button.revealed {
+  width: min(100%, 320px);
+  aspect-ratio: 360 / 650;
+}
+
+.draw-card-button.revealed .revealed-card-shell,
+.draw-card-button.revealed .tarot-card {
+  width: 100%;
+  height: 100%;
+}
+
+.draw-card-button.revealed + .draw-actions {
+  margin-top: 4px;
+}
+
+.deck-aura {
+  width: 64%;
+  border: 2px solid var(--ink);
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.72 0.21 350 / 0.92) 0 38%, transparent 39%),
+    repeating-conic-gradient(from 8deg, oklch(0.18 0.018 20 / 0.34) 0deg 1deg, transparent 1deg 18deg);
+  box-shadow: 0 0 0 12px oklch(0.92 0.21 105 / 0.46);
+  filter: none;
+  opacity: 1;
+  animation: deck-aura-breathe 4.6s ease-in-out infinite;
+}
+
+.deck-card {
+  width: min(31%, 176px);
+}
+
+.mini-card-back {
+  border: 2px solid var(--ink);
+  background: oklch(0.94 0.022 15);
+  box-shadow: 7px 8px 0 oklch(0.18 0.018 20 / 0.7);
+}
+
+.deck-card.is-hovered .mini-card-back {
+  border-color: var(--ink);
+  box-shadow: 10px 12px 0 var(--accent);
+}
+
+.deck-card.is-hovered::before {
+  inset: -10px;
+  border: 2px solid var(--ink);
+  box-shadow: none;
+}
+
+.deck-card.is-hovered::after {
+  background: oklch(0.92 0.21 105 / 0.48);
+  filter: none;
+}
+
+.deck-card.is-chosen::before {
+  border: 2px solid var(--ink);
+}
+
+.draw-focus span {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.revealed-card-shell {
+  width: min(80%, 320px);
+}
+
+.tarot-card,
+.pattern-broken,
+.pattern-orbit,
+.pattern-radial,
+.pattern-notes,
+.pattern-quiet {
+  aspect-ratio: 360 / 650;
+  color: var(--ink);
+  background:
+    linear-gradient(118deg, transparent 0 46%, color-mix(in srgb, var(--accent), transparent 70%) 46% 49%, transparent 49% 100%),
+    repeating-linear-gradient(118deg, transparent 0 13px, oklch(0.84 0.06 210 / 0.4) 14px 16px, transparent 17px 24px),
+    var(--paper);
+  background-size: 100% 100%, 100% 100%, auto;
+  border: 2px solid var(--ink);
+  box-shadow: 9px 10px 0 var(--ink);
+}
+
+.tarot-card::before {
+  inset: 9px;
+  border: 1px solid oklch(0.18 0.018 20 / 0.46);
+}
+
+.tarot-card::after {
+  opacity: 0.14;
+  background-image: radial-gradient(oklch(0.18 0.018 20 / 0.42) 0.65px, transparent 0.8px);
+  background-size: 8px 8px;
+  mix-blend-mode: multiply;
+}
+
+.card-face {
+  padding: 20px;
+}
+
+.crop-mark::before,
+.crop-mark::after {
+  background: var(--ink);
+}
+
+.card-face-header {
+  color: var(--ink);
+  font-size: 8px;
+}
+
+.symbol-window::before,
+.layout-portal .symbol-window::before,
+.layout-axis .symbol-window::after,
+.layout-split .symbol-window::before,
+.layout-shrine .symbol-window::before,
+.layout-rupture .symbol-window::before,
+.layout-constellation .symbol-window::before,
+.layout-stack .symbol-window::before,
+.layout-stage .symbol-window::before {
+  border-color: var(--ink);
+}
+
+.symbol-window::after,
+.layout-portal .symbol-window::after,
+.layout-axis .symbol-window::before,
+.layout-split .symbol-window::after,
+.layout-shrine .symbol-window::after,
+.layout-rupture .symbol-window::after,
+.layout-stage .symbol-window::after {
+  background: var(--accent);
+}
+
+.symbol-svg {
+  color: var(--ink);
+  filter: none;
+}
+
+.card-face-footer p {
+  color: var(--ink);
+  font-size: 9px;
+}
+
+.card-face-footer h2 {
+  color: var(--ink);
+  font-family: "Bodoni 72", "Times New Roman", "PingFang TC", serif;
+  font-size: clamp(27px, 4vw, 40px);
+  font-weight: 700;
+}
+
+.primary-action {
+  min-width: 172px;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  background: var(--accent);
+  box-shadow: 5px 5px 0 var(--ink);
+  font-weight: 900;
+}
+
+.draw-actions {
+  position: relative;
+  z-index: 2;
+  margin-top: -80px;
+}
+
+.primary-action:hover:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 var(--ink);
+  background: var(--signal);
+}
+
+.result-panel {
+  min-height: 0;
+  padding: 22px;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  background:
+    linear-gradient(118deg, transparent 0 64%, oklch(0.84 0.06 210 / 0.46) 64% 66%, transparent 66% 100%),
+    var(--paper);
+  box-shadow: 9px 10px 0 var(--ink);
+  transform: rotate(0.4deg);
+}
+
+.result-kicker span {
+  min-height: 23px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: oklch(0.92 0.21 105 / 0.68);
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: none;
+}
+
+.result-panel h2 {
+  color: var(--ink);
+  font-family: "Bodoni 72", "Times New Roman", "PingFang TC", serif;
+  font-weight: 700;
+}
+
+.source-name,
+.context-line,
+.result-block p,
+.result-block h3 {
+  color: var(--ink);
+}
+
+.source-name {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.context-line {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.result-block {
+  border-top-color: oklch(0.18 0.018 20 / 0.28);
+}
+
+.result-block h3 {
+  font-size: 11px;
+}
+
+.result-block p {
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+blockquote {
+  margin-top: 18px;
+  padding: 15px;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  background: oklch(0.72 0.21 350 / 0.58);
+  font-family: "Bodoni 72", "Times New Roman", "PingFang TC", serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.28;
+}
+
+@media (max-width: 1120px) {
+  .hero-stage,
+  .hero-stage.has-reading {
+    grid-template-columns: minmax(210px, 250px) minmax(330px, 1fr);
+  }
+
+  .result-panel {
+    grid-column: 1 / -1;
+    max-width: 680px;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    padding: 18px 14px 28px;
+  }
+
+  .art-disc-pink {
+    top: 38%;
+    right: -27%;
+  }
+
+  .art-disc-yellow {
+    left: 70%;
+  }
+
+  .art-collage-paper,
+  .art-collage-head,
+  .art-collage-sun,
+  .art-collage-hands {
+    display: none;
+  }
+
+  .art-collage-text {
+    right: auto;
+    left: 46%;
+    top: -7%;
+  }
+
+  .art-collage-sun {
+    right: -23%;
+    top: 22%;
+  }
+
+  .art-collage-hands {
+    right: auto;
+    left: -10%;
+    bottom: 37px;
+  }
+
+  .art-collage-eye {
+    right: -20%;
+    top: 54%;
+  }
+
+  .topbar {
+    margin-bottom: 24px;
+    padding-bottom: 13px;
+  }
+
+  .topbar h1 {
+    font-size: clamp(44px, 14vw, 68px);
+  }
+
+  .status-chip {
+    align-self: flex-end;
+  }
+
+  .hero-stage,
+  .hero-stage.has-reading {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ritual-panel {
+    order: 2;
+  }
+
+  .card-stage {
+    order: 1;
+    min-height: 0;
+    gap: 19px;
+  }
+
+  .result-panel {
+    order: 3;
+    width: calc(100% - 12px);
+  }
+
+  .scenario-list {
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .scenario-button,
+  .scenario-button.is-daily {
+    min-width: 174px;
+    min-height: 82px;
+    padding: 14px 8px;
+    border: 1.5px solid var(--ink);
+  }
+
+  .scenario-button::after {
+    inset: 8px;
+  }
+
+  .draw-card-button {
+    width: min(92vw, 390px);
+    aspect-ratio: 0.92;
+  }
+
+  .deck-card {
+    width: min(30%, 112px);
+  }
+
+  .deck-spread {
+    transform: scale(0.82);
+  }
+
+  .headline-block .short-copy {
+    font-size: clamp(42px, 13vw, 62px);
+    line-height: 1.08;
+  }
+
+  .revealed-card-shell {
+    width: min(78%, 296px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-collage,
+  .art-collage img {
+    animation: none;
+  }
+}
+
+/* Parchment revision: quieter, hand-drawn, and deliberately unsweetened. */
+:root {
+  color: oklch(0.25 0.02 65);
+  background: oklch(0.88 0.036 75);
+  --paper: oklch(0.935 0.028 75);
+  --ink: oklch(0.25 0.02 65);
+  --muted: oklch(0.45 0.026 65);
+  --quiet: oklch(0.25 0.02 65 / 0.12);
+  --line: oklch(0.25 0.02 65 / 0.34);
+  --panel: oklch(0.92 0.03 75 / 0.92);
+  --accent: oklch(0.49 0.025 65);
+  --signal: oklch(0.76 0.055 78);
+}
+
+html,
+body {
+  background: oklch(0.88 0.036 75);
+}
+
+.app-shell {
+  background:
+    radial-gradient(circle at 22% 18%, oklch(0.94 0.028 76 / 0.72) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 77% 68%, oklch(0.43 0.02 65 / 0.12) 0 0.75px, transparent 1.5px),
+    oklch(0.88 0.036 75);
+  background-size: 17px 17px, 13px 13px, auto;
+}
+
+.app-shell::after {
+  opacity: 0.18;
+}
+
+.art-brush {
+  opacity: 0.16;
+  background: repeating-linear-gradient(118deg, transparent 0 8px, oklch(0.42 0.02 65 / 0.45) 9px 11px, transparent 12px 18px);
+}
+
+.art-disc-pink,
+.art-disc-yellow {
+  display: none;
+}
+
+.art-scratch {
+  opacity: 0.18;
+}
+
+.art-collage {
+  filter: none;
+  opacity: 0.48;
+}
+
+.art-collage-paper {
+  opacity: 0.34;
+}
+
+.eyebrow {
+  color: var(--ink);
+  background: oklch(0.8 0.038 78);
+  transform: none;
+}
+
+.status-chip,
+.scenario-spell {
+  background: oklch(0.92 0.027 75);
+  box-shadow: none;
+  transform: none;
+}
+
+.status-chip span,
+.spell-pulse {
+  background: oklch(0.44 0.022 65);
+}
+
+.scenario-button.is-active::after,
+.scenario-button:hover::after {
+  background: oklch(0.78 0.045 78 / 0.52);
+}
+
+.scenario-button.is-daily::before,
+.scenario-button.is-daily.is-active::before {
+  background: oklch(0.78 0.045 78);
+}
+
+.headline-block .short-copy {
+  text-shadow: none;
+}
+
+.deck-aura {
+  border-color: oklch(0.25 0.02 65 / 0.68);
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.74 0.044 78 / 0.74) 0 38%, transparent 39%),
+    repeating-conic-gradient(from 8deg, oklch(0.25 0.02 65 / 0.3) 0deg 1deg, transparent 1deg 18deg);
+  box-shadow: none;
+}
+
+.mini-card-back,
+.deck-card.is-hovered .mini-card-back,
+.tarot-card,
+.result-panel,
+.primary-action,
+.scenario-spell {
+  box-shadow: none;
+}
+
+.deck-card.is-hovered .mini-card-back {
+  border-color: var(--ink);
+}
+
+.deck-card.is-hovered::after {
+  background: oklch(0.54 0.022 65 / 0.18);
+}
+
+.tarot-card,
+.pattern-broken,
+.pattern-orbit,
+.pattern-radial,
+.pattern-notes,
+.pattern-quiet {
+  background: var(--paper);
+  box-shadow: none;
+}
+
+.primary-action {
+  border-color: var(--ink);
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.primary-action:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: none;
+  color: var(--ink);
+  background: oklch(0.76 0.055 78);
+}
+
+.result-panel {
+  background:
+    linear-gradient(118deg, transparent 0 64%, oklch(0.48 0.022 65 / 0.16) 64% 66%, transparent 66% 100%),
+    var(--paper);
+  transform: none;
+}
+
+.result-kicker span {
+  background: oklch(0.8 0.04 78);
+}
+
+blockquote {
+  background: oklch(0.8 0.04 78 / 0.7);
+}
+
+/* Restore the original dark ritual sidebar without bringing back hard shadows. */
+.ritual-panel {
+  min-height: 640px;
+  padding: 20px;
+  border: 1px solid rgba(244, 240, 232, 0.22);
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.94), rgba(20, 20, 20, 0.82));
+}
+
+.panel-heading {
+  padding: 0;
+  border: 0;
+}
+
+.panel-heading h2 {
+  color: #f4f0e8;
+  font-family: "Avenir Next", "PingFang TC", "Noto Sans TC", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.scenario-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.scenario-button,
+.scenario-button.is-daily {
+  min-height: 68px;
+  padding: 13px 14px;
+  border: 1px solid rgba(244, 240, 232, 0.14);
+  color: #f4f0e8;
+  background: rgba(14, 14, 16, 0.48);
+  transform: none;
+}
+
+.scenario-button.is-daily {
+  min-height: 76px;
+  padding: 14px 16px;
+  border-color: rgba(244, 240, 232, 0.28);
+  background: rgba(244, 240, 232, 0.07);
+}
+
+.scenario-button::after {
+  display: none;
+}
+
+.scenario-button.is-daily::before {
+  right: 14px;
+  top: 14px;
+  border-color: rgba(244, 240, 232, 0.25);
+  color: rgba(244, 240, 232, 0.78);
+  background: transparent;
+}
+
+.scenario-button:hover {
+  transform: translateX(4px);
+  border-color: rgba(244, 240, 232, 0.52);
+  background: rgba(244, 240, 232, 0.08);
+}
+
+.scenario-button.is-active,
+.scenario-button.is-daily.is-active {
+  border-color: rgba(244, 240, 232, 0.72);
+  background: rgba(244, 240, 232, 0.13);
+}
+
+.scenario-button span,
+.scenario-button.is-daily span {
+  max-width: calc(100% - 58px);
+  color: #f4f0e8;
+  font-size: 15px;
+}
+
+.scenario-button.is-daily span {
+  font-size: 17px;
+}
+
+.scenario-button small,
+.scenario-button.is-daily small {
+  max-width: calc(100% - 58px);
+  margin-top: 6px;
+  color: rgba(244, 240, 232, 0.65);
+  font-size: 12px;
+}
+
+@media (max-width: 760px) {
+  .ritual-panel {
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .scenario-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    margin-top: 18px;
+    padding-bottom: 6px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .scenario-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scenario-button,
+  .scenario-button.is-daily {
+    min-width: 172px;
+    min-height: 76px;
+    scroll-snap-align: start;
+  }
+
+  .scenario-button.is-daily {
+    min-width: 210px;
+  }
+}
+
+/* Restore the light collage backdrop while keeping the calmer controls. */
+html,
+body {
+  background: #f9f3f0;
+}
+
+.app-shell {
+  background:
+    linear-gradient(118deg, transparent 0 38%, oklch(0.89 0.045 210 / 0.42) 38% 39.5%, transparent 39.5% 100%),
+    linear-gradient(118deg, transparent 0 65%, oklch(0.89 0.045 210 / 0.3) 65% 66.2%, transparent 66.2% 100%),
+    #f9f3f0;
+  background-size: 100% 100%, 100% 100%, auto;
+}
+
+.app-shell::after {
+  opacity: 0.25;
+}
+
+.art-brush {
+  opacity: 0.34;
+  background: repeating-linear-gradient(118deg, transparent 0 8px, oklch(0.82 0.075 215 / 0.74) 9px 12px, transparent 13px 18px);
+}
+
+.art-disc-pink,
+.art-disc-yellow {
+  display: block;
+}
+
+.art-disc-pink {
+  background: oklch(0.72 0.21 350 / 0.54);
+}
+
+.art-disc-yellow {
+  background: oklch(0.92 0.21 105 / 0.64);
+}
+
+.art-scratch {
+  opacity: 0.28;
+}
+
+.art-collage {
+  opacity: 1;
+  filter: drop-shadow(3px 5px 0 oklch(0.18 0.018 20 / 0.16));
+}
+
+.art-collage-paper {
+  opacity: 0.48;
+}
+
+.art-collage-head {
+  opacity: 0.82;
+}
+
+.art-disc-pink,
+.art-disc-yellow {
+  display: none;
+}
+
+.card-face-footer {
+  min-width: 0;
+}
+
+.card-face-footer h2 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-size: clamp(22px, 3.2vw, 34px);
+  line-height: 1.08;
+}
+
+blockquote {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  margin: 20px 0 0;
+  padding: 4px 0;
+  border: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: clamp(18px, 1.45vw, 21px);
+  line-height: 1.38;
+}
+
+.oracle-sigil {
+  display: grid;
+  width: 48px;
+  aspect-ratio: 1;
+  place-items: center;
+  color: var(--ink);
+  opacity: 0.7;
+  transform: rotate(-8deg);
+}
+
+.oracle-sigil svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Return the scenario column to the light sketchbook treatment. */
+.ritual-panel {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.panel-heading {
+  padding: 0 0 15px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.panel-heading h2 {
+  color: var(--ink);
+  font-family: "Bodoni 72", "Times New Roman", "PingFang TC", serif;
+  font-size: clamp(25px, 2.1vw, 33px);
+  font-weight: 700;
+  line-height: 0.96;
+}
+
+.scenario-list {
+  display: grid;
+  gap: 0;
+  margin-top: 0;
+}
+
+.scenario-button,
+.scenario-button.is-daily {
+  min-height: 0;
+  padding: 16px 6px 16px 0;
+  border: 0;
+  border-bottom: 1px solid oklch(0.18 0.018 20 / 0.35);
+  color: var(--ink);
+  background: transparent;
+  transform: none;
+}
+
+.scenario-button::after {
+  display: block;
+  left: -8px;
+  right: 6px;
+  top: 10px;
+  bottom: 10px;
+  z-index: -1;
+  background: transparent;
+  transform: rotate(-0.7deg);
+}
+
+.scenario-button.is-daily::before {
+  right: 0;
+  top: 16px;
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--signal);
+}
+
+.scenario-button:hover {
+  transform: translateX(5px) rotate(-0.4deg);
+  border-color: var(--ink);
+  background: transparent;
+}
+
+.scenario-button:hover::after {
+  background: oklch(0.88 0.08 210 / 0.28);
+}
+
+.scenario-button.is-active,
+.scenario-button.is-daily.is-active {
+  border-color: var(--ink);
+  background: transparent;
+}
+
+.scenario-button.is-active::after {
+  background: oklch(0.76 0.055 78 / 0.58);
+}
+
+.scenario-button.is-daily.is-active::after {
+  background: oklch(0.76 0.055 78 / 0.58);
+}
+
+.scenario-button span,
+.scenario-button.is-daily span {
+  max-width: calc(100% - 56px);
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.scenario-button.is-daily span {
+  font-size: 17px;
+}
+
+.scenario-button small,
+.scenario-button.is-daily small {
+  max-width: calc(100% - 56px);
+  margin-top: 5px;
+  color: oklch(0.37 0.024 20);
+  font-size: 11px;
+}
+
+@media (max-width: 760px) {
+  .draw-card-button.revealed {
+    width: min(78vw, 296px);
+    aspect-ratio: 360 / 650;
+  }
+
+  .ritual-panel {
+    order: 1;
+  }
+
+  .card-stage {
+    order: 2;
+  }
+
+  .result-panel {
+    order: 3;
+  }
+}
+
+@media (max-width: 760px) {
+  .ritual-panel {
+    padding: 0;
+  }
+
+  .scenario-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    margin-top: 14px;
+    padding-bottom: 6px;
+  }
+
+  .scenario-button,
+  .scenario-button.is-daily {
+    min-width: 174px;
+    min-height: 82px;
+    padding: 14px 8px;
+    border: 1.5px solid var(--ink);
   }
 }
