@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { cards, scenarios, type CardReading, type DesignerTarotCard, type ScenarioId, type VisualSymbol } from "./data/cards";
 
 type DrawState = "idle" | "drawing" | "revealed";
@@ -37,17 +37,6 @@ function App() {
   const [selectedDeckIndex, setSelectedDeckIndex] = useState(3);
   const selectedScenarioMeta = scenarios.find((scenario) => scenario.id === selectedScenario) ?? scenarios[0];
   const activeReading = activeCard ? getCardReading(activeCard, selectedScenario) : null;
-  const constellation = useMemo(
-    () =>
-      Array.from({ length: 18 }, (_, index) => ({
-        id: index,
-        left: `${8 + ((index * 31) % 86)}%`,
-        top: `${10 + ((index * 47) % 76)}%`,
-        delay: `${(index % 7) * 0.45}s`,
-      })),
-    [],
-  );
-
   function handleDraw() {
     if (drawState === "drawing") return;
 
@@ -68,18 +57,21 @@ function App() {
   }
 
   return (
-    <main className="app-shell">
-      <div className="ambient-grid" aria-hidden="true" />
-      <div className="ambient-orbit orbit-one" aria-hidden="true" />
-      <div className="ambient-orbit orbit-two" aria-hidden="true" />
-      {constellation.map((dot) => (
-        <span
-          key={dot.id}
-          className="constellation-dot"
-          style={{ left: dot.left, top: dot.top, animationDelay: dot.delay }}
-          aria-hidden="true"
-        />
-      ))}
+    <main className={`app-shell ${drawState === "drawing" ? "is-drawing" : ""} ${drawState === "revealed" ? "is-revealed" : ""}`}>
+      <div className="art-field" aria-hidden="true">
+        <span className="art-brush art-brush-blue" />
+        <span className="art-brush art-brush-blue-secondary" />
+        <span className="art-disc art-disc-pink" />
+        <span className="art-disc art-disc-yellow" />
+        <span className="art-scratch art-scratch-one" />
+        <span className="art-scratch art-scratch-two" />
+        <span className="art-collage art-collage-paper"><img src="/collage/aged-paper.png" alt="" /></span>
+        <span className="art-collage art-collage-text"><img src="/collage/text-fragments.png" alt="" /></span>
+        <span className="art-collage art-collage-sun"><img src="/collage/many-eyed-sun.png" alt="" /></span>
+        <span className="art-collage art-collage-hands"><img src="/collage/palmistry-hands.png" alt="" /></span>
+        <span className="art-collage art-collage-head"><img src="/collage/marble-head.png" alt="" /></span>
+        <span className="art-collage art-collage-eye"><img src="/collage/weeping-eye.png" alt="" /></span>
+      </div>
 
       <header className="topbar">
         <div>
@@ -88,7 +80,7 @@ function App() {
         </div>
         <div className="status-chip">
           <span />
-          30 cards loaded
+          30 張牌已就位
         </div>
       </header>
 
@@ -114,22 +106,24 @@ function App() {
         </aside>
 
         <section className="card-stage">
-          <div className="headline-block">
-            <p className="short-copy">抽出你的設計神諭</p>
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={selectedScenario}
-                className="scenario-spell"
-                initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
-                transition={{ duration: 0.42, ease: [0.2, 0.8, 0.2, 1] }}
-              >
-                <span className="spell-pulse" aria-hidden="true" />
-                <span>{scenarioCopy[selectedScenario]}</span>
-              </motion.p>
-            </AnimatePresence>
-          </div>
+          {drawState !== "revealed" ? (
+            <div className="headline-block">
+              <p className="short-copy">抽出你的設計神諭</p>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={selectedScenario}
+                  className="scenario-spell"
+                  initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
+                  transition={{ duration: 0.42, ease: [0.2, 0.8, 0.2, 1] }}
+                >
+                  <span className="spell-pulse" aria-hidden="true" />
+                  <span>{scenarioCopy[selectedScenario]}</span>
+                </motion.p>
+              </AnimatePresence>
+            </div>
+          ) : null}
 
           <motion.button
             type="button"
@@ -215,7 +209,16 @@ function App() {
                 <ResultBlock title="設計提醒" text={activeReading?.designReminder ?? ""} />
                 <ResultBlock title="下一步行動" text={activeReading?.nextAction ?? ""} />
 
-                <blockquote>{activeReading?.oracleLine}</blockquote>
+                <blockquote>
+                  <span className="oracle-sigil" aria-hidden="true">
+                    <svg viewBox="0 0 52 52" fill="none">
+                      <path d="M8 26C13 18 19 15 26 15C33 15 39 18 44 26C39 34 33 37 26 37C19 37 13 34 8 26Z" stroke="currentColor" strokeWidth="1.5" />
+                      <circle cx="26" cy="26" r="4.5" fill="currentColor" />
+                      <path d="M26 5V10M26 42V47M5 26H10M42 26H47M11.2 11.2L14.7 14.7M37.3 37.3L40.8 40.8M40.8 11.2L37.3 14.7M14.7 37.3L11.2 40.8" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+                    </svg>
+                  </span>
+                  <span>{activeReading?.oracleLine}</span>
+                </blockquote>
               </motion.div>
             </motion.aside>
           ) : null}
@@ -243,6 +246,15 @@ const spreadCards = [
   { x: 118, y: -8, rotate: 11, scale: 0.9 },
   { x: 176, y: 24, rotate: 17, scale: 0.86 },
 ];
+
+const drawFocusStars = Array.from({ length: 14 }, (_, index) => ({
+  id: index,
+  angle: `${(360 / 14) * index}deg`,
+  distance: `${148 + ((index * 23) % 54)}px`,
+  delay: `${(index % 7) * 0.025}s`,
+  size: `${index % 4 === 0 ? 6 : index % 2 === 0 ? 4 : 3}px`,
+  color: index % 4 === 0 ? "#CFC0A7" : index % 3 === 0 ? "#8D8070" : "#F2E9D9",
+}));
 
 function DeckSpread({
   state,
@@ -297,6 +309,22 @@ function DeckSpread({
       onPointerLeave={() => setHoveredCardIndex(null)}
       onMouseLeave={() => setHoveredCardIndex(null)}
     >
+      <div className="draw-focus" aria-hidden="true">
+        {drawFocusStars.map((star) => (
+          <span
+            key={star.id}
+            style={
+              {
+                "--focus-angle": star.angle,
+                "--focus-distance": star.distance,
+                "--focus-delay": star.delay,
+                "--focus-size": star.size,
+                "--focus-color": star.color,
+              } as React.CSSProperties
+            }
+          />
+        ))}
+      </div>
       <div className="deck-aura" />
       {spreadCards.map((card, index) => {
         const isChosen = index === selectedIndex;
@@ -353,42 +381,8 @@ function DeckSpread({
 function MiniCardBack() {
   return (
     <div className="mini-card-back">
-      <svg viewBox="0 0 120 160" className="mini-card-symbol">
-        <path
-          d="M20 80C31 61 46 51 64 51C82 51 98 62 108 80C98 98 82 109 64 109C46 109 31 98 20 80Z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path d="M30 80C40 67 51 62 64 62C77 62 89 68 98 80" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.46" />
-        <circle cx="64" cy="80" r="13" fill="#E7FF4F" stroke="currentColor" strokeWidth="1.5" />
-        <circle cx="64" cy="80" r="5" fill="#101010" />
-        <circle cx="68" cy="76" r="1.5" fill="#F4F0E8" opacity="0.9" />
-      </svg>
+      <img className="mini-card-art" src="/card-back/tarot-card-back.png" alt="" />
     </div>
-  );
-}
-
-function CardBack({ accent }: { accent: string }) {
-  return (
-    <article className="tarot-card card-back" style={{ "--accent": accent } as React.CSSProperties}>
-      <div className="crop-mark top-left" />
-      <div className="crop-mark top-right" />
-      <div className="crop-mark bottom-left" />
-      <div className="crop-mark bottom-right" />
-      <div className="card-code">DESIGNER TAROT</div>
-      <svg className="card-symbol" viewBox="0 0 220 260" role="img" aria-label="Designer Tarot 牌背">
-        <rect x="34" y="38" width="152" height="184" rx="4" fill="none" stroke="currentColor" strokeWidth="2" />
-        <path d="M54 130C74 96 98 82 126 86C150 90 168 106 180 130C164 160 142 174 112 172C86 170 66 156 54 130Z" fill="none" stroke="currentColor" strokeWidth="3" />
-        <circle cx="118" cy="130" r="22" fill="var(--accent)" />
-        <circle cx="118" cy="130" r="8" fill="#101010" />
-        <path d="M144 162L170 202L149 194L136 218Z" fill="var(--accent)" stroke="currentColor" strokeWidth="2" />
-        <path d="M62 62H86M62 198H86M154 62H178M154 198H178" stroke="currentColor" strokeWidth="2" />
-      </svg>
-      <p className="back-oracle">ASK THE BRIEF / ALIGN THE CHAOS</p>
-    </article>
   );
 }
 
@@ -398,10 +392,6 @@ function TarotFace({ card }: { card: DesignerTarotCard }) {
       className={`tarot-card card-face pattern-${card.visual.pattern} layout-${card.visual.layout} intensity-${card.visual.intensity}`}
       style={{ "--accent": card.visual.accentColor } as React.CSSProperties}
     >
-      <div className="crop-mark top-left" />
-      <div className="crop-mark top-right" />
-      <div className="crop-mark bottom-left" />
-      <div className="crop-mark bottom-right" />
       <header className="card-face-header">
         <span>{card.id.toUpperCase()}</span>
         <span>{card.arcana === "major" ? "MAJOR" : "ORIGINAL"}</span>

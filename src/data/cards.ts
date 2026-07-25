@@ -130,7 +130,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天先讓檔案自己安靜一下。",
       },
     },
-    visual: { symbol: "empty-frame", accentColor: "#E7FF4F", pattern: "grid", intensity: "medium", layout: "portal" },
+    visual: { symbol: "empty-frame", accentColor: "#D4C39A", pattern: "grid", intensity: "medium", layout: "portal" },
   },
   {
     id: "major-01",
@@ -188,7 +188,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "魔法值不足時，常用快捷鍵就很夠。",
       },
     },
-    visual: { symbol: "wand-tools", accentColor: "#59D8FF", pattern: "orbit", intensity: "medium", layout: "axis" },
+    visual: { symbol: "wand-tools", accentColor: "#A6B6B4", pattern: "orbit", intensity: "medium", layout: "axis" },
   },
   {
     id: "major-02",
@@ -246,7 +246,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天先別替每個像素做心理諮商。",
       },
     },
-    visual: { symbol: "intuition-eye", accentColor: "#8BAA91", pattern: "quiet", intensity: "low", layout: "shrine" },
+    visual: { symbol: "intuition-eye", accentColor: "#A2A894", pattern: "quiet", intensity: "low", layout: "shrine" },
   },
   {
     id: "major-03",
@@ -304,7 +304,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "靈感牆今天先不要加班。",
       },
     },
-    visual: { symbol: "bloom", accentColor: "#FF6FAE", pattern: "radial", intensity: "medium", layout: "constellation" },
+    visual: { symbol: "bloom", accentColor: "#B9A1A4", pattern: "radial", intensity: "medium", layout: "constellation" },
   },
   {
     id: "major-04",
@@ -362,7 +362,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天讓系統替你做幾個決定。",
       },
     },
-    visual: { symbol: "system-grid", accentColor: "#4067FF", pattern: "grid", intensity: "high", layout: "stack" },
+    visual: { symbol: "system-grid", accentColor: "#879899", pattern: "grid", intensity: "high", layout: "stack" },
   },
   {
     id: "major-05",
@@ -420,7 +420,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天先走有路燈的那條路。",
       },
     },
-    visual: { symbol: "classic-columns", accentColor: "#C8C0B5", pattern: "quiet", intensity: "low", layout: "shrine" },
+    visual: { symbol: "classic-columns", accentColor: "#BFB2A4", pattern: "quiet", intensity: "low", layout: "shrine" },
   },
   {
     id: "major-06",
@@ -478,7 +478,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天的選擇題，先用排除法。",
       },
     },
-    visual: { symbol: "paired-shapes", accentColor: "#FF6FAE", pattern: "orbit", intensity: "medium", layout: "split" },
+    visual: { symbol: "paired-shapes", accentColor: "#B9A1A4", pattern: "orbit", intensity: "medium", layout: "split" },
   },
   {
     id: "major-07",
@@ -536,7 +536,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "戰車也要進站加油。",
       },
     },
-    visual: { symbol: "chariot-arrow", accentColor: "#FF563F", pattern: "grid", intensity: "high", layout: "axis" },
+    visual: { symbol: "chariot-arrow", accentColor: "#AD8974", pattern: "grid", intensity: "high", layout: "axis" },
   },
   {
     id: "major-08",
@@ -594,7 +594,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天先把麥克風放下，不代表你沒話可說。",
       },
     },
-    visual: { symbol: "soft-force", accentColor: "#8BAA91", pattern: "orbit", intensity: "medium", layout: "split" },
+    visual: { symbol: "soft-force", accentColor: "#A2A894", pattern: "orbit", intensity: "medium", layout: "split" },
   },
   {
     id: "major-09",
@@ -652,7 +652,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "靈感沒有失蹤，它只是先去充電。",
       },
     },
-    visual: { symbol: "lantern", accentColor: "#E7FF4F", pattern: "quiet", intensity: "low", layout: "shrine" },
+    visual: { symbol: "lantern", accentColor: "#D4C39A", pattern: "quiet", intensity: "low", layout: "shrine" },
   },
   {
     id: "major-10",
@@ -710,7 +710,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "輪子一直轉，你不用每一圈都跟著跑。",
       },
     },
-    visual: { symbol: "fortune-wheel", accentColor: "#59D8FF", pattern: "radial", intensity: "high", layout: "constellation" },
+    visual: { symbol: "fortune-wheel", accentColor: "#A6B6B4", pattern: "radial", intensity: "high", layout: "constellation" },
   },
   {
     id: "major-11",
@@ -768,7 +768,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天先借一把尺，不必當法官。",
       },
     },
-    visual: { symbol: "scales", accentColor: "#F4F0E8", pattern: "grid", intensity: "medium", layout: "split" },
+    visual: { symbol: "scales", accentColor: "#DED4C3", pattern: "grid", intensity: "medium", layout: "split" },
   },
   {
     id: "major-12",
@@ -826,7 +826,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天把問題借給別人看五分鐘。",
       },
     },
-    visual: { symbol: "inverted-frame", accentColor: "#6D5D7A", pattern: "quiet", intensity: "medium", layout: "portal" },
+    visual: { symbol: "inverted-frame", accentColor: "#938D88", pattern: "quiet", intensity: "medium", layout: "portal" },
   },
   {
     id: "major-13",
@@ -884,7 +884,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天的斷捨離，只要一小格。",
       },
     },
-    visual: { symbol: "cut-mark", accentColor: "#FF5A5F", pattern: "broken", intensity: "high", layout: "rupture" },
+    visual: { symbol: "cut-mark", accentColor: "#B28B82", pattern: "broken", intensity: "high", layout: "rupture" },
   },
   {
     id: "major-14",
@@ -942,7 +942,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天讓空白先幫個忙。",
       },
     },
-    visual: { symbol: "balance-cups", accentColor: "#8BAA91", pattern: "orbit", intensity: "low", layout: "axis" },
+    visual: { symbol: "balance-cups", accentColor: "#A2A894", pattern: "orbit", intensity: "low", layout: "axis" },
   },
   {
     id: "major-15",
@@ -1000,7 +1000,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "像素今天不會跑掉，放心下班。",
       },
     },
-    visual: { symbol: "pixel-chain", accentColor: "#C8FF3D", pattern: "broken", intensity: "high", layout: "stack" },
+    visual: { symbol: "pixel-chain", accentColor: "#C4B58E", pattern: "broken", intensity: "high", layout: "stack" },
   },
   {
     id: "major-16",
@@ -1058,7 +1058,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "先拉封鎖線，不用今天拆大樓。",
       },
     },
-    visual: { symbol: "broken-grid", accentColor: "#FF563F", pattern: "broken", intensity: "high", layout: "rupture" },
+    visual: { symbol: "broken-grid", accentColor: "#AD8974", pattern: "broken", intensity: "high", layout: "rupture" },
   },
   {
     id: "major-17",
@@ -1116,7 +1116,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天的星星不用很亮，看得到就好。",
       },
     },
-    visual: { symbol: "north-star", accentColor: "#59D8FF", pattern: "radial", intensity: "medium", layout: "constellation" },
+    visual: { symbol: "north-star", accentColor: "#A6B6B4", pattern: "radial", intensity: "medium", layout: "constellation" },
   },
   {
     id: "major-18",
@@ -1174,7 +1174,7 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["ambiguity", "research", "brief"],
-    visual: { symbol: "fog-moon", accentColor: "#6D5D7A", pattern: "quiet", intensity: "medium", layout: "shrine" },
+    visual: { symbol: "fog-moon", accentColor: "#938D88", pattern: "quiet", intensity: "medium", layout: "shrine" },
   },
   {
     id: "major-19",
@@ -1232,7 +1232,7 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["success", "clarity", "validation"],
-    visual: { symbol: "sun-proof", accentColor: "#E7FF4F", pattern: "radial", intensity: "high", layout: "constellation" },
+    visual: { symbol: "sun-proof", accentColor: "#D4C39A", pattern: "radial", intensity: "high", layout: "constellation" },
   },
   {
     id: "major-20",
@@ -1290,7 +1290,7 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["review", "learning", "iteration"],
-    visual: { symbol: "review-call", accentColor: "#FF6FAE", pattern: "notes", intensity: "medium", layout: "stage" },
+    visual: { symbol: "review-call", accentColor: "#B9A1A4", pattern: "notes", intensity: "medium", layout: "stage" },
   },
   {
     id: "major-21",
@@ -1348,7 +1348,7 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["delivery", "launch", "portfolio"],
-    visual: { symbol: "world-frame", accentColor: "#4067FF", pattern: "grid", intensity: "medium", layout: "portal" },
+    visual: { symbol: "world-frame", accentColor: "#879899", pattern: "grid", intensity: "medium", layout: "portal" },
   },
   {
     id: "designer-01",
@@ -1406,7 +1406,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "今天先讀懂，不急著回敬一版。",
       },
     },
-    visual: { symbol: "feedback-loop", accentColor: "#FF6FAE", pattern: "notes", intensity: "high", layout: "rupture" },
+    visual: { symbol: "feedback-loop", accentColor: "#B9A1A4", pattern: "notes", intensity: "high", layout: "rupture" },
   },
   {
     id: "designer-02",
@@ -1464,7 +1464,7 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["moodboard", "inspiration", "style"],
-    visual: { symbol: "moodboard", accentColor: "#59D8FF", pattern: "notes", intensity: "medium", layout: "stack" },
+    visual: { symbol: "moodboard", accentColor: "#A6B6B4", pattern: "notes", intensity: "medium", layout: "stack" },
   },
   {
     id: "designer-03",
@@ -1522,7 +1522,7 @@ export const cards: DesignerTarotCard[] = [
         oracleLine: "死線很急，你不用跟著燃燒。",
       },
     },
-    visual: { symbol: "deadline", accentColor: "#FF563F", pattern: "radial", intensity: "high", layout: "axis" },
+    visual: { symbol: "deadline", accentColor: "#AD8974", pattern: "radial", intensity: "high", layout: "axis" },
   },
   {
     id: "designer-04",
@@ -1580,7 +1580,7 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["ux", "user", "empathy"],
-    visual: { symbol: "ux-ghost", accentColor: "#8BAA91", pattern: "quiet", intensity: "medium", layout: "shrine" },
+    visual: { symbol: "ux-ghost", accentColor: "#A2A894", pattern: "quiet", intensity: "medium", layout: "shrine" },
   },
   {
     id: "designer-05",
@@ -1638,7 +1638,7 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["pitch", "presentation", "narrative"],
-    visual: { symbol: "pitch-stage", accentColor: "#E7FF4F", pattern: "grid", intensity: "medium", layout: "stage" },
+    visual: { symbol: "pitch-stage", accentColor: "#D4C39A", pattern: "grid", intensity: "medium", layout: "stage" },
   },
   {
     id: "designer-06",
@@ -1696,7 +1696,7 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["blank", "start", "anxiety"],
-    visual: { symbol: "blank-canvas", accentColor: "#F4F0E8", pattern: "quiet", intensity: "low", layout: "portal" },
+    visual: { symbol: "blank-canvas", accentColor: "#DED4C3", pattern: "quiet", intensity: "low", layout: "portal" },
   },
   {
     id: "designer-07",
@@ -1754,7 +1754,7 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["handoff", "spec", "engineering"],
-    visual: { symbol: "redline", accentColor: "#FF5A5F", pattern: "notes", intensity: "high", layout: "stage" },
+    visual: { symbol: "redline", accentColor: "#B28B82", pattern: "notes", intensity: "high", layout: "stage" },
   },
   {
     id: "designer-08",
@@ -1812,6 +1812,6 @@ export const cards: DesignerTarotCard[] = [
       },
     },
     moodTags: ["stakeholder", "scope", "priority"],
-    visual: { symbol: "many-heads", accentColor: "#4067FF", pattern: "broken", intensity: "high", layout: "rupture" },
+    visual: { symbol: "many-heads", accentColor: "#879899", pattern: "broken", intensity: "high", layout: "rupture" },
   },
 ];
